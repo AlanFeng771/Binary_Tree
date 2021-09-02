@@ -18,10 +18,11 @@ class Binary_Tree{
         Binary_Tree<T>* getLchild();
         Binary_Tree<T>* getRchild();
         T getData();
-    private:
         Binary_Tree<T>* Lchild;
         Binary_Tree<T>* Rchild;
         T data;
+    private:
+        
 };
 #include "Binary_Tree.cpp"
 #endif

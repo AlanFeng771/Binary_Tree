@@ -2,6 +2,11 @@
 #include "Binary_Tree.h"
 using namespace std;
 template<class T>
+Binary_Tree<T>::Binary_Tree(){
+    this->Lchild = NULL;
+    this->Rchild = NULL;
+}
+template<class T>
 Binary_Tree<T>::Binary_Tree(T data){
     this->data = data;
     this->Lchild = NULL;
