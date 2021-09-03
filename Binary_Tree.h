@@ -12,6 +12,7 @@ class Binary_Tree{
         void addRchild(T data);
         Binary_Tree<T>* Copy();
         bool Equal(Binary_Tree<T>* Tree);
+        // bool operator==(const Binary_Tree<T>&, const Binary_Tree<T>&);
         int Count();
         int Height();
         Binary_Tree<T>* Swap();
