@@ -3,54 +3,51 @@
 #include"../stack/stack_link_list.h"
 #include<cmath>
 using namespace std;
-template<class T>
-class Expression_Binary_Tree : public Binary_Tree<T>{
+class Expression_Binary_Tree : public Binary_Tree<char>{
     public:
         Expression_Binary_Tree();
-        Expression_Binary_Tree(T data);
+        Expression_Binary_Tree(char data);
         Expression_Binary_Tree(string Tree);
+        Expression_Binary_Tree* Lchild;
+        Expression_Binary_Tree* Rchild;
+        void Inorder();
+        char data;
         void Eval();
-        int res;
+        int res=0;
 };
 bool is_operand(char c){
     return ((int)c>=97 && (int)c<=122)||((int)c>=48 && (int)c<=57);
 }
-int main(){
-    string str = "abcd***ef+/gh+/";
-    Expression_Binary_Tree<char> bt = Expression_Binary_Tree<char>(str);
-    cout<<bt.Rchild->data<<endl;
-    //bt.Eval();
-    //cout<<bt.res<<endl;
-    bt.Inorder();
-    cout<<endl;
-    bt.Postorder();
-    cout<<endl;
-    
-}
-template<class T>
-Expression_Binary_Tree<T>::Expression_Binary_Tree():Binary_Tree<T>(){
+
+
+Expression_Binary_Tree::Expression_Binary_Tree():Binary_Tree<char>(){
 
 }
-template<class T>
-Expression_Binary_Tree<T>::Expression_Binary_Tree(T data):Binary_Tree<T>(data){
 
+Expression_Binary_Tree::Expression_Binary_Tree(char data){
+    this->data = data;
+    this->Lchild = NULL;
+    this->Rchild = NULL;
 }
-template<class T>
-Expression_Binary_Tree<T>::Expression_Binary_Tree(string Tree){
-    stack<Expression_Binary_Tree<T>*> s;
-    Expression_Binary_Tree<T>* node;
+
+Expression_Binary_Tree::Expression_Binary_Tree(string Tree){
+    stack<Expression_Binary_Tree*> s;
+    Expression_Binary_Tree* node;
     for(int i=0;i<Tree.size();i++){
       if(is_operand(Tree[i])){
-        node = new Expression_Binary_Tree<char>(Tree[i]);
+        node = new Expression_Binary_Tree(Tree[i]);
+        //cout<<"operand "<<node->data<<endl;
         s.push(node);
       }else{
         if(i==Tree.size()-1){
             node = this;
             node->data = Tree[i];
+            //cout<<"this "<<node->data<<endl;
         }
 
         else{
-            node = new Expression_Binary_Tree<char>(Tree[i]);
+            node = new Expression_Binary_Tree(Tree[i]);
+            //cout<<"orther "<<node->data<<endl;
         }
         
         node->Rchild = s.pop();
@@ -60,14 +57,18 @@ Expression_Binary_Tree<T>::Expression_Binary_Tree(string Tree){
     }
     
 }
-template<class T>
-void Expression_Binary_Tree<T>::Eval(){
+
+void Expression_Binary_Tree::Eval(){
     if(this!=NULL){
         this->Lchild->Eval();
         this->Rchild->Eval();
-        if(Isoperand(this->data)){
+        //cout<<this->data<<endl;
+        if(is_operand(this->data)){
             this->res = ((int)this->data)-48;
-        }else{
+            
+        }
+
+        else{
             switch (this->data)
             {
             case '+':
@@ -90,5 +91,13 @@ void Expression_Binary_Tree<T>::Eval(){
             }
             
         }
+    }
+    // cout<<"NULL"<<endl;
+}
+void Expression_Binary_Tree::Inorder(){
+    if(this!=NULL){
+        this->Lchild->Inorder();
+        cout<<this->data<<"->";
+        this->Rchild->Inorder();
     }
 }
